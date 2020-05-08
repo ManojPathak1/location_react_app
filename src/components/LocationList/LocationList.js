@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { tableData } from "../../mockData";
 import { getLocations, deleteLocation } from "../../indexedDb";
 
 function LocationList({ onEdit }) {
@@ -12,7 +11,6 @@ function LocationList({ onEdit }) {
   }, []);
   const deleteLoc = id => {
     deleteLocation(id).then(res => {
-      console.log(res);
       getLocations().then(setLocations);
     });
   };

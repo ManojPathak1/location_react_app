@@ -4,15 +4,12 @@ export const createDB = () => {
   return new Promise((resolve) => {
     const request = indexedDB.open("db", 1);
     request.onupgradeneeded = e => {
-      console.log("Upgrade is ccalled !");
       db = e.target.result;
-      console.log(db);
       db.createObjectStore("locations", { keyPath: "id", autoIncrement: true });
       resolve(db);
     };
     request.onsuccess = e => {
       db = e.target.result;
-      console.log("Database created successfully !");
       resolve(db);
     };
     request.onerror = e => { };
@@ -26,14 +23,13 @@ export const addLocation = data => {
 };
 
 export const deleteLocation = id => new Promise(resolve => {
-    const transaction = db.transaction("locations", "readwrite");
-    const locations = transaction.objectStore("locations");
-    const data = locations.delete(id);
+  const transaction = db.transaction("locations", "readwrite");
+  const locations = transaction.objectStore("locations");
+  const data = locations.delete(id);
   data.onsuccess = e => {
-    console.log(e);
-      resolve(e.target);
-    }
-  });
+    resolve(e.target);
+  }
+});
 
 export const editLocation = data => {
   const transaction = db.transaction("locations", "readwrite");

@@ -14,7 +14,7 @@ function formReducer(state, action) {
 
 function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
   const [state, dispatch] = useReducer(formReducer, data);
-  const [error, setError] = useState({});
+  const [error] = useState({});
   const [showFacilityModal, setShowFacilityModal] = useState(false);
   const onChangeInputs = event => {
     const { name, value } = event.target;
@@ -33,7 +33,7 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
     dispatch({ type: "update", payload: { name: "facilityTimes", value } });
     setShowFacilityModal(false);
   }
-  const validate = () => {
+  /* const validate = () => {
     const error = {};
     for (const key in state) {
       let value = state[key];
@@ -59,7 +59,7 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
         default:
       }
     }
-  }
+  } */
   return <div style={{ padding: "15px" }}>
     <h3>{edit ? "Edit" : "Add"} Location</h3>
     <TextInput name="locationName" label="Location Name" value={state.locationName} onChange={onChangeInputs} error={error.locationName} />
