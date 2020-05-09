@@ -1,0 +1,11 @@
+.homeHeader {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.homeSubview {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

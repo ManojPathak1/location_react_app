@@ -1,3 +1,45 @@
+.timeSelectContainer {
+  display: flex;
+}
+
+.timeSelectContainer input {
+  width: 70px;
+  height: 20px;
+}
+
+.ampmBox {
+  display: flex;
+  justify-content: space-evenly;
+  border: 1px #eee solid;
+  margin: 0 10px;
+  align-items: center;
+  height: 24px;
+  border-radius: 5px;
+}
+
+.am {
+  border-top-left-radius: 5px;
+  border-right: 1px #eee solid;
+  border-bottom-left-radius: 5px;
+  font-size: 12px;
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pm {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 12px;
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .selected {
   background-color: blue;
   color: white;

@@ -1,0 +1,30 @@
+.locationListContainer {
+  flex: 1;
+}
+
+.width100 {
+  width: 100%;
+}
+
+.listHeader {
+  display: flex;
+  border: 1px #eee solid;
+  padding: 10px;
+  margin: 10px;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+.list {
+  display: flex;
+  border: 1px #eee solid;
+  padding: 10px;
+  margin: 10px;
+  background-color: #fff;
+}
+
+.buttonContainer {
+  flex: 2;
+  display: flex;
+  justify-content: space-around;
+}

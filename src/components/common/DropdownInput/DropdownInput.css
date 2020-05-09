@@ -1,0 +1,20 @@
+.dropdownInputContainer {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownInputContainer label {
+  font-size: 13px;
+}
+
+.dropdownInputContainer select {
+  margin-top: 5px;
+  font-size: 15px;
+}
+
+.dropdownInputContainer span {
+  height: 12px;
+  color: red;
+  font-size: 12px;
+}

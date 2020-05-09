@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
+import "./Pagination.css";
 
 function Pagination({ length, paginationUpdate }) {
   const [dropdown, setDropdown] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    console.log("Update");
     paginationUpdate(dropdown, currentPage);
   }, []);
   useEffect(() => {
     paginationUpdate(dropdown, currentPage);
   }, [currentPage, dropdown]);
   const setDropdownValue = (event) => {
-    console.log(event.target.value);
     setDropdown(event.target.value);
     setCurrentPage(1);
   };
@@ -20,9 +19,9 @@ function Pagination({ length, paginationUpdate }) {
     else setCurrentPage(currentPage - 1);
   }
   const lastPage = Math.ceil(length / dropdown);
-  return <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", color: "#777" }}>
+  return <div className="paginationContainer">
     <div>
-      <span style={{ marginRight: "10px", fontSize: "12px" }}>Items per page</span>
+      <span className="itemsPerPage">Items per page</span>
       <select value={dropdown} onChange={setDropdownValue}>
         <option value="5">5</option>
         <option value="10">10</option>
@@ -32,9 +31,9 @@ function Pagination({ length, paginationUpdate }) {
       </select>
     </div>
     <div>
-      <span style={{ margin: "0 10px", fontSize: "12px" }}>{currentPage} of {lastPage}</span>
+      <span className="currentPage">{currentPage} of {lastPage}</span>
     </div>
-    <div style={{ width: "80px", display: "flex", justifyContent: "space-around" }}>
+    <div className="buttonBox">
       <button onClick={() => updatePage("DECREMENT")} disabled={currentPage === 1}>{"<"}</button>
       <button onClick={() => updatePage("INCREMENT")} disabled={currentPage === lastPage}>{">"}</button>
     </div>

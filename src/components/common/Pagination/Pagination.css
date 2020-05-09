@@ -1,0 +1,22 @@
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  color: #777;
+}
+
+.itemsPerPage {
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.currentPage {
+  margin: 0 10px;
+  font-size: 12px;
+}
+
+.buttonBox {
+  width: 80px;
+  display: flex;
+  justify-content: space-around;
+}

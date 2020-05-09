@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./Home.css";
 import LocationList from "../../components/LocationList/LocationList";
 import AddEditLocation from "../../components/AddEditLocation/AddEditLocation";
 import FacilityTimes from "../../components/FacilityTimes/FacilityTimes";
@@ -42,14 +43,10 @@ function Home() {
   };
   return (
     <div>
-      <div style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        padding: "10px",
-        }}>
+      <div className="homeHeader">
         <Button customStyle={{ backgroundColor: "blue", borderRadius: "50px", fontSize: "13px" }} label="+ Add Location" onClick={onClickAddLocation} />
       </div>
-      <div style={{ display: "flex", justifyContent: "center" ,width: "100%" }}>
+      <div className="homeSubview">
         {renderSubView()}
       </div>
     </div>);

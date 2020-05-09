@@ -1,7 +1,24 @@
+.textInputContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10px
+}
+
+.textInputContainer label {
+  font-size: 13px;
+}
+
+.textInputContainer span {
+  height: 12px;
+  color: red;
+  font-size: 12px;
+}
+
 .inputText {
   outline: 0;
   border-width: 0 0 2px;
   font-size: 17px;
+  margin-top: 5px;
 }
 .inputText:focus {
   border-color: green

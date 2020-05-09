@@ -6,3 +6,32 @@
 .inputText:focus {
   border-color: green
 }
+
+.tagsInputContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.tagsInputContainer label {
+  font-size: 13px;
+}
+
+.tagsInputContainer input {
+  margin-top: 5px;
+}
+
+.tagsInputContainer div {
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tagsInputContainer span {
+  font-size: 12px;
+  padding: 4px 12px;
+  border: 1px #ccc solid;
+  background-color: #eee;
+  border-radius: 30px;
+  margin: 5px;
+}

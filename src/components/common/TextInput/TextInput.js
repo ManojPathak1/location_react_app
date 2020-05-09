@@ -1,10 +1,11 @@
 import React from "react";
 import "./TextInput.css";
 
-function TextInput({ name, label, value, onChange, onFocus }) {
-  return <div style={{ display: "flex", flexDirection: "column", padding:"10px" }}>
-    <label style={{ fontSize: "13px" }}>{label}</label>
-    <input className="inputText" onFocus={onFocus} style={{ marginTop: "5px" }} name={name} type="text" value={value} onChange={onChange} />
+function TextInput({ name, label, value, onChange, onFocus, error }) {
+  return <div className="textInputContainer">
+    <label>{label}</label>
+    <input className="inputText" onFocus={onFocus} name={name} type="text" value={value} onChange={onChange} />
+    <span>{error || ""}</span>
   </div>;
 }
 

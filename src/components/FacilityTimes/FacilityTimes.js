@@ -66,7 +66,7 @@ function FacilityTimes({ cancelCallback, saveCallback, data }) {
   };
   const renderTimeList = () => {
     return facilityTimes.map(el => (
-      <div style={{ display: "flex", padding: "10px 0px"}} key={el.key}>
+      <div className="timeSelectBox" key={el.key}>
         <Checkbox name={el.key} checked={get(state, `${el.key}.checked`, false)} label={el.label} onChange={(event) => onChangeCheckbox(event, el.key)} />
         <TimeSelect inputText={get(state, `${el.key}.fromTime`, "")} selected={get(state, `${el.key}.fromMeridiem`, "")} onChangeTimeInput={(event) => onChangeFromTimeInput(event, el.key)} onChangeMeridiem={(value) => onChangeFromMeridiem(value, el.key)} />
         <TimeSelect inputText={get(state, `${el.key}.toTime`, "")} selected={get(state, `${el.key}.toMeridiem`, "")} onChangeTimeInput={(event) => onChangeToTimeInput(event, el.key)} onChangeMeridiem={(value) => onChangeToMeridiem(value, el.key)} />
@@ -75,11 +75,11 @@ function FacilityTimes({ cancelCallback, saveCallback, data }) {
     ));
   } 
   return <div id="overlay">
-    <div style={{ border: "1px #eee solid", background: "#fff", padding: "15px"}} className="card">
+    <div className="facilityTimesContainer">
       <h4>Facility Times</h4>
       {renderTimeList()}
-      <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
-        <div style={{ width: "150px", display: "flex", justifyContent: "space-between" }}>
+      <div className="btnContainer">
+        <div className="innerBtnContainer">
           <Button label="Cancel" customStyle={{ backgroundColor: "red" }} onClick={onClickCancel} />
           <Button label="Save" onClick={onClickSave} />
         </div>
