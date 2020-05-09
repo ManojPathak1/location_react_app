@@ -7,6 +7,7 @@ import TagsInput from "../common/TagsInput/TagsInput";
 import DropdownInput from "../common/DropdownInput/DropdownInput";
 import Button from "../common/Button/Button";
 import { timeZones, states } from "../../config";
+import { facilityTimes } from "../../mockData";
 
 function formReducer(state, action) {
   switch (action.type) {
@@ -105,7 +106,17 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
           <TextInput name="zipCode" label="Zip Code" value={state.zipCode} onChange={onChangeInputs} error={error.zipCode} />
           <TextInput name="phoneNumber" label="Phone Number" value={state.phoneNumber} onChange={onChangeInputs} error={error.phoneNumber} />
         </div>
-        <TextInput onFocus={() => onClickFacilityTimes()} name="facilityTimes" label="Facility Times" value={Object.keys(get(state, 'facilityTimes', {}))} onChange={onChangeInputs} />
+        <TextInput
+          onFocus={() => onClickFacilityTimes()}
+          name="facilityTimes"
+          label="Facility Times"
+          value={
+            facilityTimes
+              .filter(el => get(state, 'facilityTimes', {})
+              .hasOwnProperty(el.key)).map(el => el.label)
+              .join(" - ")
+          }
+          onChange={() => { }} />
       </div>
       <div className="addEditDivision">
         <TextInput name="suiteNo" label="Suite No." value={state.suiteNo} onChange={onChangeInputs} />

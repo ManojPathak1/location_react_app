@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+.checkboxContainer input {
+  color: blue;
+}
+
 .checkboxContainer label {
   margin-left: 5px;
 }

@@ -371,7 +371,7 @@ export const timeZones = [
     "offset": "GMT+14:00",
     "name": "Pacific/Kiritimati"
   }
-].map(el => ({ value: el.offset, label: el.name }));;
+].map(el => ({ value: el.name, label: el.name }));;
 export const states = ["Andhra Pradesh",
   "Arunachal Pradesh",
   "Assam",

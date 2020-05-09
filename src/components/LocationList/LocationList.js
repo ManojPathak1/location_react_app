@@ -3,17 +3,11 @@ import chunk from "lodash/chunk";
 import "./LocationList.css";
 import { getLocations, deleteLocation } from "../../indexedDb";
 import Pagination from "../common/Pagination/Pagination";
+import { formatPhoneNumber } from "../../utils";
 
 function LocationList({ onEdit }) {
-  const [allLocations, setAllLocations] = useState([]);
+  const [allLocations, setAllLocations] = useState(null);
   const [locations, setLocations] = useState([]);
-  const renderAddLocation = () => {
-    return <div className="noLocationContainer">
-      <img alt="" src="./images/addLocation.png" height="300" />
-      <h3>Kindly Add Your Location First</h3>
-      <span>There is no location added right now</span>
-    </div>;
-  };
   useEffect(() => {
     getLocations().then(setAllLocations);
   }, []);
@@ -27,6 +21,13 @@ function LocationList({ onEdit }) {
   };
   const paginationUpdate = (limit, currentPage) => {
     setLocations(chunk(allLocations, limit)[currentPage - 1]);
+  };
+  const renderAddLocation = () => {
+    return <div className="noLocationContainer">
+      <img alt="" src="./images/addLocation.png" height="300" />
+      <h3>Kindly Add Your Location First</h3>
+      <span>There is no location added right now</span>
+    </div>;
   };
   const renderTable = () => {
     return (<div>
@@ -44,10 +45,10 @@ function LocationList({ onEdit }) {
               <div style={{ flex: 1 }}>{(i + 1)}</div>
               <div style={{ flex: 5 }}>{el.locationName}</div>
               <div style={{ flex: 8 }}>{[el.addressLine1, el.addressLine2, el.city, el.state, el.zipCode].filter(el => el).join(", ")}</div>
-              <div style={{ flex: 3 }}>{el.phoneNumber}</div>
+              <div style={{ flex: 3 }}>{formatPhoneNumber(el.phoneNumber)}</div>
               <div className="buttonContainer">
-                <i onClick={() => onClickEdit(el)} class="fa fa-edit"></i>
-                <i onClick={() => deleteLoc(el.id)} class="fa fa-trash"></i>
+                <i onClick={() => onClickEdit(el)} className="fa fa-edit"></i>
+                <i onClick={() => deleteLoc(el.id)} className="fa fa-trash"></i>
               </div>
             </div>
           ))}
@@ -56,9 +57,11 @@ function LocationList({ onEdit }) {
       <Pagination length={allLocations.length} paginationUpdate={paginationUpdate} />
     </div>);
   };
-  const showTable = allLocations.length > 0;
+  const showAddLocation = allLocations !== null && allLocations.length === 0;
+  const showTable = allLocations !== null && allLocations.length > 0;
   return <div className="locationListContainer">
-    {showTable ? renderTable() : renderAddLocation()}
+    {showTable && renderTable()}
+    {showAddLocation && renderAddLocation()}
   </div>;
 }
 

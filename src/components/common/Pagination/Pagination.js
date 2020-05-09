@@ -4,17 +4,14 @@ import { paginationPages } from "../../../config";
 import Button from "../Button/Button";
 
 function Pagination({ length, paginationUpdate }) {
-  const [dropdown, setDropdown] = useState(5);
+  const [dropdown, setDropdown] = useState(paginationPages[0].value);
   const [currentPage, setCurrentPage] = useState(1);
-  useEffect(() => {
-    paginationUpdate(dropdown, currentPage);
-  }, []);
   useEffect(() => {
     paginationUpdate(dropdown, currentPage);
   }, [currentPage, dropdown]);
   useEffect(() => {
-    paginationUpdate(5, 1);
-    setDropdown(5);
+    paginationUpdate(paginationPages[0].value, 1);
+    setDropdown(paginationPages[0].value);
     setCurrentPage(1);
   }, [length]);
   const setDropdownValue = (event) => {
@@ -30,13 +27,13 @@ function Pagination({ length, paginationUpdate }) {
     <div>
       <span className="itemsPerPage">Items per page</span>
       <select value={dropdown} onChange={setDropdownValue}>
-        {paginationPages.map(el => (<option value={el.value}>{el.label}</option>))}
+        {paginationPages.map(el => (<option key={el.value} value={el.value}>{el.label}</option>))}
       </select>
     </div>
     <div className="buttonBox">
-      <Button label="&lt;" customStyle={{ backgroundColor: "#fff", color: "#000", borderRadius: "30px" }} onClick={() => updatePage("DECREMENT")} disabled={currentPage === 1} />
+      <Button label="&lt;" customStyle={{ fontWeight: "bold", backgroundColor: "#fff", color: "#777", borderRadius: "30px" }} onClick={() => updatePage("DECREMENT")} disabled={currentPage === 1} />
         <span className="currentPage">{currentPage} of {lastPage}</span>
-      <Button label="&gt;" customStyle={{ backgroundColor: "#fff", color: "#000", borderRadius: "30px" }} onClick={() => updatePage("INCREMENT")} disabled={currentPage === lastPage} />
+      <Button label="&gt;" customStyle={{ fontWeight: "bold", backgroundColor: "#fff", color: "#777", borderRadius: "30px" }} onClick={() => updatePage("INCREMENT")} disabled={currentPage === lastPage} />
     </div>
   </div>;
 }
