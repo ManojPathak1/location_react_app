@@ -3,6 +3,7 @@ import LocationList from "../../components/LocationList/LocationList";
 import AddEditLocation from "../../components/AddEditLocation/AddEditLocation";
 import FacilityTimes from "../../components/FacilityTimes/FacilityTimes";
 import { createDB, addLocation, editLocation } from "../../indexedDb";
+import Button from "../../components/common/Button/Button";
 
 function Home() {
   const [currentView, setCurrentView] = useState("LOCATION_LIST");
@@ -44,10 +45,13 @@ function Home() {
       <div style={{
         display: "flex",
         justifyContent: "flex-end",
-    padding: "10px"}}>
-        <button onClick={onClickAddLocation}>+ Add Location</button>
+        padding: "10px",
+        }}>
+        <Button customStyle={{ backgroundColor: "blue", borderRadius: "50px", fontSize: "13px" }} label="+ Add Location" onClick={onClickAddLocation} />
       </div>
-      {renderSubView()}
+      <div style={{ display: "flex", justifyContent: "center" ,width: "100%" }}>
+        {renderSubView()}
+      </div>
     </div>);
 }
 

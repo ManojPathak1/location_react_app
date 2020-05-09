@@ -1,7 +1,11 @@
 import React, { useReducer, useState } from "react";
 import get from "lodash/get";
+import "./AddEditLocation.css";
 import TextInput from "../common/TextInput/TextInput";
 import FacilityTimes from "../FacilityTimes/FacilityTimes";
+import TagsInput from "../common/TagsInput/TagsInput";
+import DropdownInput from "../common/DropdownInput/DropdownInput";
+import Button from "../common/Button/Button";
 
 function formReducer(state, action) {
   switch (action.type) {
@@ -32,6 +36,16 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
   const saveCallbackFacilityModal = value => {
     dispatch({ type: "update", payload: { name: "facilityTimes", value } });
     setShowFacilityModal(false);
+  };
+  const onChangeTimeZone = (value) => {
+    dispatch({ type: "update", payload: { name: "timeZone", value } });
+  };
+  const onChangeState = value => {
+    console.log(value);
+    dispatch({ type: "update", payload: { name: "state", value } });
+  }
+  const onChangeAppointmentPool = value => {
+    dispatch({ type: "update", payload: { name: "appointmentPool", value } });
   }
   /* const validate = () => {
     const error = {};
@@ -60,33 +74,55 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
       }
     }
   } */
-  return <div style={{ padding: "15px" }}>
-    <h3>{edit ? "Edit" : "Add"} Location</h3>
+  return <div className="card" style={{ padding: "15px", width: "53%", border: "1px #eee solid", backgroundColor: "#fff" }}>
+    <div style={{padding: "5px", fontWeight: "bold", color: "blue"}}>{edit ? "Edit" : "Add"} Location</div>
     <TextInput name="locationName" label="Location Name" value={state.locationName} onChange={onChangeInputs} error={error.locationName} />
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div>
+      <div style={{ flex: 1 }}>
         <TextInput name="addressLine1" label="Address Line 1" value={state.addressLine1} onChange={onChangeInputs} />
         <TextInput name="addressLine2" label="Address Line 2" value={state.addressLine2} onChange={onChangeInputs} />
         <div style={{ display: "flex" }}>
           <TextInput name="zipCode" label="Zip Code" value={state.zipCode} onChange={onChangeInputs} />
           <TextInput name="phoneNumber" label="Phone Number" value={state.phoneNumber} onChange={onChangeInputs} />
         </div>
-        {/* <TextInput name="facilityTimes" label="Facility Times" value={state.facilityTimes} onChange={onChangeInputs} /> */}
-        <button onClick={onClickFacilityTimes}>Facility Times</button>
+        <TextInput onFocus={() => onClickFacilityTimes()} name="facilityTimes" label="Facility Times" value={state.facilityTimes} onChange={onChangeInputs} />
+        {/* <button onClick={onClickFacilityTimes}>Facility Times</button> */}
       </div>
-      <div>
+      <div style={{ flex: 1 }}>
         <TextInput name="suiteNo" label="Suite No." value={state.suiteNo} onChange={onChangeInputs} />
         <div style={{ display: "flex" }}>
           <TextInput name="city" label="City" value={state.city} onChange={onChangeInputs} />
-          <TextInput name="state" label="State" value={state.state} onChange={onChangeInputs} />
+          <DropdownInput
+            label="State"
+            value={state.state}
+            onChange={onChangeState}
+            placeholder="Select State"
+            options={[
+              { label: "Time Zone 1", value: "timezone1" },
+              { label: "Time Zone 2", value: "timezone2" },
+              { label: "Time Zone 3", value: "timezone3" }
+            ]} />
+          {/* <TextInput name="state" label="State" value={state.state} onChange={onChangeInputs} /> */}
         </div>
-        <TextInput name="timeZone" label="Time Zone" value={state.timeZone} onChange={onChangeInputs} />
-        <TextInput name="appointmentPool" label="Appointment Pool" value={state.appointmentPool} onChange={onChangeInputs} />
+        <DropdownInput
+          label="Time Zone"
+          value={state.timeZone}
+          onChange={onChangeTimeZone}
+          placeholder="Select Time Zone"
+          options={[
+            { label: "Time Zone 1", value: "timezone1" },
+            { label: "Time Zone 2", value: "timezone2" },
+            { label: "Time Zone 3", value: "timezone3" }
+          ]} />
+        {/* <TextInput name="timeZone" label="Time Zone" value={state.timeZone} onChange={onChangeInputs} /> */}
+        <TagsInput label="Appointment Pool" value={state.appointmentPool} onChange={onChangeAppointmentPool} />
       </div>
     </div>
     <div style={{ display: "flex", justifyContent: "flex-end" }}>
-      <button onClick={onCancelCallback}>Cancel</button>
-      <button onClick={onClickSave}>{edit ? "Edit" : "Add"}</button>
+      <div style={{ width: "150px", display: "flex", justifyContent: "space-between" }}>
+        <Button label="Cancel" customStyle={{ backgroundColor: "red" }} onClick={onCancelCallback} />
+        <Button label={edit ? "Edit" : "Add"} onClick={onClickSave} />
+      </div>
     </div>
     {showFacilityModal && <FacilityTimes cancelCallback={cancelCallbackFacilityModal} saveCallback={saveCallbackFacilityModal} data={get(state, 'facilityTimes', {})} />}
   </div>;
