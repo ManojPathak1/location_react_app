@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Pagination.css";
+import { paginationPages } from "../../../config";
+import Button from "../Button/Button";
 
 function Pagination({ length, paginationUpdate }) {
   const [dropdown, setDropdown] = useState(5);
@@ -10,6 +12,11 @@ function Pagination({ length, paginationUpdate }) {
   useEffect(() => {
     paginationUpdate(dropdown, currentPage);
   }, [currentPage, dropdown]);
+  useEffect(() => {
+    paginationUpdate(5, 1);
+    setDropdown(5);
+    setCurrentPage(1);
+  }, [length]);
   const setDropdownValue = (event) => {
     setDropdown(event.target.value);
     setCurrentPage(1);
@@ -23,19 +30,13 @@ function Pagination({ length, paginationUpdate }) {
     <div>
       <span className="itemsPerPage">Items per page</span>
       <select value={dropdown} onChange={setDropdownValue}>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="30">30</option>
-        <option value="40">40</option>
-        <option value="50">50</option>
+        {paginationPages.map(el => (<option value={el.value}>{el.label}</option>))}
       </select>
     </div>
-    <div>
-      <span className="currentPage">{currentPage} of {lastPage}</span>
-    </div>
     <div className="buttonBox">
-      <button onClick={() => updatePage("DECREMENT")} disabled={currentPage === 1}>{"<"}</button>
-      <button onClick={() => updatePage("INCREMENT")} disabled={currentPage === lastPage}>{">"}</button>
+      <Button label="&lt;" customStyle={{ backgroundColor: "#fff", color: "#000", borderRadius: "30px" }} onClick={() => updatePage("DECREMENT")} disabled={currentPage === 1} />
+        <span className="currentPage">{currentPage} of {lastPage}</span>
+      <Button label="&gt;" customStyle={{ backgroundColor: "#fff", color: "#000", borderRadius: "30px" }} onClick={() => updatePage("INCREMENT")} disabled={currentPage === lastPage} />
     </div>
   </div>;
 }

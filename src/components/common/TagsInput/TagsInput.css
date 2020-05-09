@@ -4,7 +4,7 @@
   font-size: 17px;
 }
 .inputText:focus {
-  border-color: green
+  border-color: blue;
 }
 
 .tagsInputContainer {

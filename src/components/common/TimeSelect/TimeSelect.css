@@ -1,5 +1,6 @@
 .timeSelectContainer {
   display: flex;
+  align-items: center;
 }
 
 .timeSelectContainer input {

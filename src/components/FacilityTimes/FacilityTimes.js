@@ -70,13 +70,13 @@ function FacilityTimes({ cancelCallback, saveCallback, data }) {
         <Checkbox name={el.key} checked={get(state, `${el.key}.checked`, false)} label={el.label} onChange={(event) => onChangeCheckbox(event, el.key)} />
         <TimeSelect inputText={get(state, `${el.key}.fromTime`, "")} selected={get(state, `${el.key}.fromMeridiem`, "")} onChangeTimeInput={(event) => onChangeFromTimeInput(event, el.key)} onChangeMeridiem={(value) => onChangeFromMeridiem(value, el.key)} />
         <TimeSelect inputText={get(state, `${el.key}.toTime`, "")} selected={get(state, `${el.key}.toMeridiem`, "")} onChangeTimeInput={(event) => onChangeToTimeInput(event, el.key)} onChangeMeridiem={(value) => onChangeToMeridiem(value, el.key)} />
-        <Button customStyle={{ backgroundColor: "white", fontSize: "12px", color: "#000", border: "1px #000 solid" }} onClick={() => { console.log("Hello"); onClickApplyToAll(el.key) }} label="Apply to All Checked" />
+        <Button customStyle={{ backgroundColor: "white", fontSize: "12px", color: "#000", border: "1px #000 solid" }} onClick={() => { onClickApplyToAll(el.key); }} label="Apply to All Checked" />
       </div>
     ));
   } 
   return <div id="overlay">
     <div className="facilityTimesContainer">
-      <h4>Facility Times</h4>
+      <div className="addEditHeader">FACILITY TIMES</div>
       {renderTimeList()}
       <div className="btnContainer">
         <div className="innerBtnContainer">

@@ -6,6 +6,7 @@ import FacilityTimes from "../FacilityTimes/FacilityTimes";
 import TagsInput from "../common/TagsInput/TagsInput";
 import DropdownInput from "../common/DropdownInput/DropdownInput";
 import Button from "../common/Button/Button";
+import { timeZones, states } from "../../config";
 
 function formReducer(state, action) {
   switch (action.type) {
@@ -17,7 +18,6 @@ function formReducer(state, action) {
 }
 
 function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
-  console.log(data);
   const [state, dispatch] = useReducer(formReducer, data);
   const [error, setError] = useState({});
   const [showFacilityModal, setShowFacilityModal] = useState(false);
@@ -33,7 +33,6 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
     dispatch({ type: "update", payload: { name, value } });
   };
   const onClickSave = () => {
-    console.log("onClickSave");
     if (validate()) onSaveCallback(edit ? "EDIT" : "ADD", state);
   };
   const onClickFacilityTimes = () => {
@@ -50,7 +49,6 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
     dispatch({ type: "update", payload: { name: "timeZone", value } });
   };
   const onChangeState = value => {
-    console.log(value);
     dispatch({ type: "update", payload: { name: "state", value } });
   }
   const onChangeAppointmentPool = value => {
@@ -58,8 +56,8 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
   }
   const validate = () => {
     const error = {};
-    for (const key in state) {
-      let value = state[key];
+    for (const key of ["locationName", "city", "state"]) {
+      let value = state[key] || "";
       switch (key) {
         case "locationName":
           value = value.trim();
@@ -87,19 +85,17 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
           if (value) {
             const pattern = new RegExp("/^[a-zA-Z0-9]{5,10}$/");
             const res = pattern.test(value);
-            if (false) error[key] = "Zipcode not valid !"; 
+            if (false) error[key] = "Zipcode not valid !";
           }
           break;
         default:
       }
     }
     setError(error);
-    console.log(Object.values(error));
-    console.log(Object.values(error).length === 0);
     return Object.values(error).length === 0;
   }
   return <div className="addEditLocationContainer">
-    <div className="addEditHeader">{edit ? "Edit" : "Add"} Location</div>
+    <div className="addEditHeader">{edit ? "EDIT" : "ADD"} LOCATION</div>
     <TextInput name="locationName" label="Location Name" value={state.locationName} onChange={onChangeInputs} error={error.locationName} />
     <div className="addEditFields">
       <div className="addEditDivision">
@@ -109,33 +105,27 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
           <TextInput name="zipCode" label="Zip Code" value={state.zipCode} onChange={onChangeInputs} error={error.zipCode} />
           <TextInput name="phoneNumber" label="Phone Number" value={state.phoneNumber} onChange={onChangeInputs} error={error.phoneNumber} />
         </div>
-        <TextInput onFocus={() => onClickFacilityTimes()} name="facilityTimes" label="Facility Times" value={state.facilityTimes} onChange={onChangeInputs} />
+        <TextInput onFocus={() => onClickFacilityTimes()} name="facilityTimes" label="Facility Times" value={Object.keys(get(state, 'facilityTimes', {}))} onChange={onChangeInputs} />
       </div>
       <div className="addEditDivision">
         <TextInput name="suiteNo" label="Suite No." value={state.suiteNo} onChange={onChangeInputs} />
         <div className="displayFlex">
-          <TextInput name="city" label="City" value={state.city} onChange={onChangeInputs} />
+          <TextInput name="city" label="City" value={state.city} onChange={onChangeInputs} error={error.city} />
           <DropdownInput
             label="State"
             value={state.state}
             onChange={onChangeState}
             placeholder="Select State"
-            options={[
-              { label: "Time Zone 1", value: "timezone1" },
-              { label: "Time Zone 2", value: "timezone2" },
-              { label: "Time Zone 3", value: "timezone3" }
-            ]} />
+            error={error.state}
+            options={states} />
         </div>
         <DropdownInput
           label="Time Zone"
           value={state.timeZone}
           onChange={onChangeTimeZone}
           placeholder="Select Time Zone"
-          options={[
-            { label: "Time Zone 1", value: "timezone1" },
-            { label: "Time Zone 2", value: "timezone2" },
-            { label: "Time Zone 3", value: "timezone3" }
-          ]} />
+          error={error.timeZone}
+          options={timeZones} />
         <TagsInput label="Appointment Pool" value={state.appointmentPool} onChange={onChangeAppointmentPool} />
       </div>
     </div>

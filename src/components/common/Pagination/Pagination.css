@@ -1,22 +1,26 @@
 .paginationContainer {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
   color: #777;
 }
 
 .itemsPerPage {
-  margin-right: 10px;
   font-size: 12px;
+  margin-right: 10px;
 }
 
 .currentPage {
   margin: 0 10px;
-  font-size: 12px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .buttonBox {
-  width: 80px;
+  width: 150px;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  margin-left: 10px;
 }

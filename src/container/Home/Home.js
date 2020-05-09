@@ -44,7 +44,7 @@ function Home() {
   return (
     <div>
       <div className="homeHeader">
-        <Button customStyle={{ backgroundColor: "blue", borderRadius: "50px", fontSize: "13px" }} label="+ Add Location" onClick={onClickAddLocation} />
+        <Button customStyle={{ backgroundColor: "blue", borderRadius: "50px", fontSize: "13px" }} label="+ ADD LOCATION" onClick={onClickAddLocation} />
       </div>
       <div className="homeSubview">
         {renderSubView()}

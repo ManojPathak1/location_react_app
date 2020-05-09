@@ -5,7 +5,6 @@ function TagsInput({ label, value, onChange }) {
   const [inputText, setInputText] = useState("");
   const [tags, setTags] = useState(value || []);
   const handleKeyDown = (e) => {
-    console.log(e.key);
     if (e.key === 'Enter') {
       const updatedTags = [...tags, ...e.target.value.split(",").map(el => el.trim())];
       setTags(updatedTags);
