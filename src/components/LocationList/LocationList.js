@@ -31,7 +31,7 @@ function LocationList({ onEdit }) {
   const renderTable = () => {
     return (<div>
       <div className="width100">
-        <div className="listHeader">
+        <div className="listHeader locationCard">
           <div className="sno"></div>
           <div className="locationName">LOCATION NAME</div>
           <div className="address">ADDRESS</div>
@@ -40,7 +40,7 @@ function LocationList({ onEdit }) {
         </div>
         <div className="width100">
           {locations.map((el, i) => (
-            <div key={el.id} className="list">
+            <div key={el.id} className="list locationCard">
               <div className="sno">{(i + 1)}</div>
               <div className="locationName">{el.locationName}</div>
               <div className="address">{[el.addressLine1, el.addressLine2, el.city, el.state, el.zipCode].filter(el => el).join(", ")}</div>

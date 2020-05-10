@@ -44,8 +44,8 @@ function Home() {
         <LocationList onEdit={onEditLocation} />
       </Suspense>;
       case ADD_EDIT_LOCATION: return <Suspense fallback={<div>Loading...</div>}>
-          <AddEditLocation edit={edit} data={editLocationData} onCancelCallback={onCancelCallback} onSaveCallback={onSaveCallback} />
-        </Suspense>;
+        <AddEditLocation edit={edit} data={editLocationData} onCancelCallback={onCancelCallback} onSaveCallback={onSaveCallback} />
+      </Suspense>;
       default:
     }
   };
