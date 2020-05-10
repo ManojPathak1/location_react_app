@@ -32,19 +32,19 @@ function LocationList({ onEdit }) {
     return (<div>
       <div className="width100">
         <div className="listHeader">
-          <div style={{ flex: 1 }}></div>
-          <div style={{ flex: 5 }}>LOCATION NAME</div>
-          <div style={{ flex: 8 }}>ADDRESS</div>
-          <div style={{ flex: 3 }}>PHONE NUMBER</div>
-          <div style={{ flex: 2 }}></div>
+          <div className="sno"></div>
+          <div className="locationName">LOCATION NAME</div>
+          <div className="address">ADDRESS</div>
+          <div className="phoneNumber">PHONE NUMBER</div>
+          <div className="actions"></div>
         </div>
         <div className="width100">
           {locations.map((el, i) => (
             <div key={el.id} className="list">
-              <div style={{ flex: 1 }}>{(i + 1)}</div>
-              <div style={{ flex: 5 }}>{el.locationName}</div>
-              <div style={{ flex: 8 }}>{[el.addressLine1, el.addressLine2, el.city, el.state, el.zipCode].filter(el => el).join(", ")}</div>
-              <div style={{ flex: 3 }}>{formatPhoneNumber(el.phoneNumber)}</div>
+              <div className="sno">{(i + 1)}</div>
+              <div className="locationName">{el.locationName}</div>
+              <div className="address">{[el.addressLine1, el.addressLine2, el.city, el.state, el.zipCode].filter(el => el).join(", ")}</div>
+              <div className="phoneNumber">{formatPhoneNumber(el.phoneNumber)}</div>
               <div className="buttonContainer">
                 <img onClick={() => onEdit(el)} alt="" src="./images/edit.png" width="18" />
                 <img onClick={() => deleteLoc(el.id)} alt="" src="./images/delete.png" width="18" />

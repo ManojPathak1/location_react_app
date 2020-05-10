@@ -53,7 +53,7 @@ function Home() {
     <div>
       <div className="homeHeader">
         <Button
-          customStyle={{ backgroundColor: "blue", borderRadius: "50px", fontSize: "13px" }}
+          customStyle={{ backgroundColor: "#0000FF", borderRadius: "50px", fontSize: "13px" }}
           label="+ ADD LOCATION"
           onClick={onClickAddLocation} />
       </div>

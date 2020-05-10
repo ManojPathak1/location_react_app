@@ -41,3 +41,9 @@
   align-items: center;
   margin-top: 30px;
 }
+
+.sno { flex: 1; }
+.locationName { flex: 5; }
+.address { flex: 8 }
+.phoneNumber { flex: 3 }
+.actions { flex: 2 }

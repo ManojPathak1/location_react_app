@@ -47,6 +47,6 @@
 }
 
 .selected {
-  background-color: blue;
-  color: white;
+  background-color: #0000FF;
+  color: #fff;
 }

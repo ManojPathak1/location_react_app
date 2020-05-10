@@ -82,7 +82,7 @@ function FacilityTimes({ cancelCallback, saveCallback, data }) {
       {renderTimeList()}
       <div className="btnContainer">
         <div className="innerBtnContainer">
-          <Button label="Cancel" customStyle={{ backgroundColor: "red" }} onClick={cancelCallback} />
+          <Button label="Cancel" customStyle={{ backgroundColor: "#FF0000" }} onClick={cancelCallback} />
           <Button label="Save" onClick={onClickSave} />
         </div>
       </div>

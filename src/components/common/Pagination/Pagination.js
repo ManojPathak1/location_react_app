@@ -13,11 +13,13 @@ function Pagination({ length, paginationUpdate }) {
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     paginationUpdate(dropdown, currentPage);
-  }, [currentPage, dropdown]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dropdown, currentPage]);
   useEffect(() => {
     paginationUpdate(initialValue, 1);
     setDropdown(initialValue);
     setCurrentPage(1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [length]);
   const setDropdownValue = (event) => {
     setDropdown(event.target.value);
