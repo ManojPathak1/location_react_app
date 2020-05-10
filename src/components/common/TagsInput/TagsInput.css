@@ -35,3 +35,7 @@
   border-radius: 30px;
   margin: 5px;
 }
+
+.tagsInputContainer img {
+  cursor: pointer;
+}

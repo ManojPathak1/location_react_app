@@ -5,6 +5,10 @@ import { getLocations, deleteLocation } from "../../indexedDb";
 import Pagination from "../common/Pagination/Pagination";
 import { formatPhoneNumber } from "../../utils";
 
+/**
+ * Location list component
+ * @param {Function} onEdit Function callback to trigger the view change to ADD | EDIT location. 
+ */
 function LocationList({ onEdit }) {
   const [allLocations, setAllLocations] = useState(null);
   const [locations, setLocations] = useState([]);
@@ -12,12 +16,7 @@ function LocationList({ onEdit }) {
     getLocations().then(setAllLocations);
   }, []);
   const deleteLoc = id => {
-    deleteLocation(id).then(() => {
-      getLocations().then(setAllLocations);
-    });
-  };
-  const onClickEdit = location => {
-    onEdit(location);
+    deleteLocation(id).then(getLocations).then(setAllLocations);
   };
   const paginationUpdate = (limit, currentPage) => {
     setLocations(chunk(allLocations, limit)[currentPage - 1]);
@@ -47,8 +46,8 @@ function LocationList({ onEdit }) {
               <div style={{ flex: 8 }}>{[el.addressLine1, el.addressLine2, el.city, el.state, el.zipCode].filter(el => el).join(", ")}</div>
               <div style={{ flex: 3 }}>{formatPhoneNumber(el.phoneNumber)}</div>
               <div className="buttonContainer">
-                <i onClick={() => onClickEdit(el)} className="fa fa-edit"></i>
-                <i onClick={() => deleteLoc(el.id)} className="fa fa-trash"></i>
+                <img onClick={() => onEdit(el)} alt="" src="./images/edit.png" width="18" />
+                <img onClick={() => deleteLoc(el.id)} alt="" src="./images/delete.png" width="18" />
               </div>
             </div>
           ))}

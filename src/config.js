@@ -410,3 +410,13 @@ export const states = ["Andhra Pradesh",
   "Puducherry"].map(el => ({ value: el, label: el }));
   
 export const paginationPages = [5, 10, 15, 20, 25].map(el => ({ label: el, value: el }));
+
+export const facilityTimes = [
+  { key: "sun", label: "Sun" },
+  { key: "mon", label: "Mon" },
+  { key: "tue", label: "Tue" },
+  { key: "wed", label: "Wed" },
+  { key: "thu", label: "Thu" },
+  { key: "fri", label: "Fri" },
+  { key: "sat", label: "Sat" },
+];

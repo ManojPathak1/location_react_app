@@ -4,6 +4,8 @@
   padding: 15px;
   border: 1px #eee solid;
   background-color: #fff;
+  width: min-content;
+  margin-bottom: 20px;
 }
 
 .addEditLocationContainer:hover {

@@ -6,6 +6,7 @@
 
 .checkboxContainer input {
   color: blue;
+  cursor: pointer;
 }
 
 .checkboxContainer label {

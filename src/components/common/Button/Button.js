@@ -1,5 +1,12 @@
-import React from "react";
+import React, { memo } from "react";
 
+/**
+ * Common Button Component
+ * @param {String} label Button Label
+ * @param {Function} onClick Function event for onClick
+ * @param {Object} customStyle Custom style for button
+ * @param {Boolean} disabled Enable/Disable button flag  
+ */
 function Button({ label, onClick, customStyle, disabled }) {
   return <button style={{
     fontSize: "15px",
@@ -15,4 +22,4 @@ function Button({ label, onClick, customStyle, disabled }) {
   }} disabled={disabled} onClick={onClick}>{label.toUpperCase()}</button>;
 }
 
-export default Button;
+export default memo(Button);

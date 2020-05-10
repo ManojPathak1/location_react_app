@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./Pagination.css";
 import { paginationPages } from "../../../config";
-import Button from "../Button/Button";
 
+/**
+ * Pagination component
+ * @param {Number} length Number of data
+ * @param {Function(Number, Number)} paginationUpdate Function callback for updating or filtering the data. 
+ */
 function Pagination({ length, paginationUpdate }) {
-  const [dropdown, setDropdown] = useState(paginationPages[0].value);
+  const initialValue = paginationPages[0].value;
+  const [dropdown, setDropdown] = useState(initialValue);
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     paginationUpdate(dropdown, currentPage);
   }, [currentPage, dropdown]);
   useEffect(() => {
-    paginationUpdate(paginationPages[0].value, 1);
-    setDropdown(paginationPages[0].value);
+    paginationUpdate(initialValue, 1);
+    setDropdown(initialValue);
     setCurrentPage(1);
   }, [length]);
   const setDropdownValue = (event) => {
@@ -31,9 +36,13 @@ function Pagination({ length, paginationUpdate }) {
       </select>
     </div>
     <div className="buttonBox">
-      <Button label="&lt;" customStyle={{ fontWeight: "bold", backgroundColor: "#fff", color: "#777", borderRadius: "30px" }} onClick={() => updatePage("DECREMENT")} disabled={currentPage === 1} />
-        <span className="currentPage">{currentPage} of {lastPage}</span>
-      <Button label="&gt;" customStyle={{ fontWeight: "bold", backgroundColor: "#fff", color: "#777", borderRadius: "30px" }} onClick={() => updatePage("INCREMENT")} disabled={currentPage === lastPage} />
+      <button onClick={() => updatePage("DECREMENT")} disabled={currentPage === 1}>
+        <img alt="" src="./images/leftArrow.png" height="12px" />
+      </button>
+      <span className="currentPage">{currentPage} of {lastPage}</span>
+      <button onClick={() => updatePage("INCREMENT")} disabled={currentPage === lastPage}>
+        <img alt="" src="./images/rightArrow.png" height="12px" />
+      </button>
     </div>
   </div>;
 }

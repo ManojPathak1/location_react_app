@@ -5,8 +5,9 @@ import "./FacilityTimes.css";
 import Checkbox from "../common/Checkbox/Checkbox";
 import TimeSelect from "../common/TimeSelect/TimeSelect";
 import Button from "../common/Button/Button";
-import { facilityTimes } from "../../mockData";
+import { facilityTimes } from "../../config";
 
+// Facility reducer to handle the facility states.
 function facilityReducer(state, action) {
   const { key } = action.payload;
   switch (action.type) {
@@ -28,13 +29,19 @@ function facilityReducer(state, action) {
     case "APPLY_TO_ALL":
       const updateValue = state[key];
       forEach(state, (el, key) => {
-        if (el.checked) state = { ...state, [key] : updateValue };
+        if (el.checked) state = { ...state, [key]: updateValue };
       });
       return state;
     default:
   }
 }
 
+/**
+ * Facility Times Component
+ * @param {Function} cancelCallback Function callback for cancel.
+ * @param {Function(Object)} saveCallback Function callback to save the data passed.
+ * @param {Object} data Initial data for Facility Component 
+ */
 function FacilityTimes({ cancelCallback, saveCallback, data }) {
   const [state, dispatch] = useReducer(facilityReducer, data);
   const onChangeCheckbox = (event, key) => {
@@ -47,18 +54,13 @@ function FacilityTimes({ cancelCallback, saveCallback, data }) {
   const onChangeToMeridiem = (toMeridiem, key) => {
     dispatch({ type: "TO_MERIDIEM", payload: { key, toMeridiem } });
   };
-  const onClickCancel = () => {
-    cancelCallback();
-  };
   const onClickSave = () => {
     saveCallback(state);
   };
-  const onChangeFromTimeInput = (event, key) => {
-    const { value: fromTime } = event.target;
+  const onChangeFromTimeInput = (fromTime, key) => {
     dispatch({ type: "FROM_TIME", payload: { key, fromTime } });
   };
-  const onChangeToTimeInput = (event, key) => {
-    const { value: toTime } = event.target;
+  const onChangeToTimeInput = (toTime, key) => {
     dispatch({ type: "TO_TIME", payload: { key, toTime } });
   };
   const onClickApplyToAll = key => {
@@ -68,19 +70,19 @@ function FacilityTimes({ cancelCallback, saveCallback, data }) {
     return facilityTimes.map(el => (
       <div className="timeSelectBox" key={el.key}>
         <Checkbox name={el.key} checked={get(state, `${el.key}.checked`, false)} label={el.label} onChange={(event) => onChangeCheckbox(event, el.key)} />
-        <TimeSelect inputText={get(state, `${el.key}.fromTime`, "")} selected={get(state, `${el.key}.fromMeridiem`, "")} onChangeTimeInput={(event) => onChangeFromTimeInput(event, el.key)} onChangeMeridiem={(value) => onChangeFromMeridiem(value, el.key)} />
-        <TimeSelect inputText={get(state, `${el.key}.toTime`, "")} selected={get(state, `${el.key}.toMeridiem`, "")} onChangeTimeInput={(event) => onChangeToTimeInput(event, el.key)} onChangeMeridiem={(value) => onChangeToMeridiem(value, el.key)} />
+        <TimeSelect inputText={get(state, `${el.key}.fromTime`, "")} selected={get(state, `${el.key}.fromMeridiem`, "")} onChangeTimeInput={(value) => onChangeFromTimeInput(value, el.key)} onChangeMeridiem={(value) => onChangeFromMeridiem(value, el.key)} />
+        <TimeSelect inputText={get(state, `${el.key}.toTime`, "")} selected={get(state, `${el.key}.toMeridiem`, "")} onChangeTimeInput={(value) => onChangeToTimeInput(value, el.key)} onChangeMeridiem={(value) => onChangeToMeridiem(value, el.key)} />
         <Button customStyle={{ backgroundColor: "white", fontSize: "12px", color: "#000", border: "1px #000 solid" }} onClick={() => { onClickApplyToAll(el.key); }} label="Apply to All Checked" />
       </div>
     ));
-  } 
+  }
   return <div id="overlay">
     <div className="facilityTimesContainer">
       <div className="addEditHeader">FACILITY TIMES</div>
       {renderTimeList()}
       <div className="btnContainer">
         <div className="innerBtnContainer">
-          <Button label="Cancel" customStyle={{ backgroundColor: "red" }} onClick={onClickCancel} />
+          <Button label="Cancel" customStyle={{ backgroundColor: "red" }} onClick={cancelCallback} />
           <Button label="Save" onClick={onClickSave} />
         </div>
       </div>

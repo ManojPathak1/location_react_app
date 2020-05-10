@@ -1,14 +1,15 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, lazy, Suspense } from "react";
 import get from "lodash/get";
 import "./AddEditLocation.css";
 import TextInput from "../common/TextInput/TextInput";
-import FacilityTimes from "../FacilityTimes/FacilityTimes";
 import TagsInput from "../common/TagsInput/TagsInput";
 import DropdownInput from "../common/DropdownInput/DropdownInput";
 import Button from "../common/Button/Button";
 import { timeZones, states } from "../../config";
-import { facilityTimes } from "../../mockData";
+import { facilityTimes } from "../../config";
+import { formatPhoneNumber } from "../../utils";
 
+// Reducer to save the states of the input fields.
 function formReducer(state, action) {
   switch (action.type) {
     case "update":
@@ -18,6 +19,16 @@ function formReducer(state, action) {
   }
 }
 
+/**
+ * Add/Edit Location form component.
+ * @param {Function} onCancelCallback Function callback to cancel the add/edit of location.
+ * @param {Function(String, Object)} onSaveCallback Function callback for add/edit, data to save.
+ * @param {Object} data Data for the edit mode of the form.
+ * @param {Boolean} edit Mode ADD | EDIT
+ */
+
+const FacilityTimes = lazy(() => import(/* webpackChunkName: 'facilityTimes' */"../FacilityTimes/FacilityTimes"));
+
 function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
   const [state, dispatch] = useReducer(formReducer, data);
   const [error, setError] = useState({});
@@ -26,6 +37,9 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
     let { name, value } = event.target;
     switch (name) {
       case "phoneNumber":
+        value = value.trim();
+        if (value.length > 14) return;
+        break;
       case "zipCode":
         value = value.trim();
         break;
@@ -57,7 +71,8 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
   }
   const validate = () => {
     const error = {};
-    for (const key of ["locationName", "city", "state"]) {
+    const validationKeys = ["locationName", "city", "state", "phoneNumber", "zipCode"];
+    for (const key of validationKeys) {
       let value = state[key] || "";
       switch (key) {
         case "locationName":
@@ -73,20 +88,16 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
           break;
         case "phoneNumber":
           value = value.trim();
-          if (value) {
-            const pattern = new RegExp("/^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$/");
-            const res = pattern.test(value);
-            if (false) error[key] = "Phone number not valid !";
-          }
+          if (value.length !== 0 && value.length !== 10) error[key] = "Phone number not valid !";
           break;
         case "timeZone":
           if (!value) error[key] = "Timezone is required !";
           break;
         case "zipCode":
           if (value) {
-            const pattern = new RegExp("/^[a-zA-Z0-9]{5,10}$/");
+            const pattern = RegExp("^[a-zA-Z0-9]{5,10}$");
             const res = pattern.test(value);
-            if (false) error[key] = "Zipcode not valid !";
+            if (!res) error[key] = "Zipcode not valid !";
           }
           break;
         default:
@@ -104,7 +115,7 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
         <TextInput name="addressLine2" label="Address Line 2" value={state.addressLine2} onChange={onChangeInputs} />
         <div className="displayFlex">
           <TextInput name="zipCode" label="Zip Code" value={state.zipCode} onChange={onChangeInputs} error={error.zipCode} />
-          <TextInput name="phoneNumber" label="Phone Number" value={state.phoneNumber} onChange={onChangeInputs} error={error.phoneNumber} />
+          <TextInput name="phoneNumber" label="Phone Number" value={formatPhoneNumber(state.phoneNumber)} onChange={onChangeInputs} error={error.phoneNumber} />
         </div>
         <TextInput
           onFocus={() => onClickFacilityTimes()}
@@ -112,8 +123,8 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
           label="Facility Times"
           value={
             facilityTimes
-              .filter(el => get(state, 'facilityTimes', {})
-              .hasOwnProperty(el.key)).map(el => el.label)
+              .filter(el => get(state, `facilityTimes.${el.key}.checked`, false))
+              .map(el => el.label)
               .join(" - ")
           }
           onChange={() => { }} />
@@ -146,7 +157,14 @@ function AddEditLocation({ onCancelCallback, onSaveCallback, data, edit }) {
         <Button label={edit ? "Edit" : "Add"} onClick={onClickSave} />
       </div>
     </div>
-    {showFacilityModal && <FacilityTimes cancelCallback={cancelCallbackFacilityModal} saveCallback={saveCallbackFacilityModal} data={get(state, 'facilityTimes', {})} />}
+    {showFacilityModal &&
+      <Suspense fallback={<div>Loading...</div>}>
+        <FacilityTimes
+        cancelCallback={cancelCallbackFacilityModal}
+        saveCallback={saveCallbackFacilityModal}
+        data={get(state, 'facilityTimes', {})} />
+      </Suspense>
+    }
   </div>;
 }
 

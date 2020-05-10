@@ -1,0 +1,2 @@
+export const ADD_EDIT_LOCATION = "ADD_EDIT_LOCATION";
+export const LOCATION_LIST = "LOCATION_LIST";

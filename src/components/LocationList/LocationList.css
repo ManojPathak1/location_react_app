@@ -30,6 +30,10 @@
   align-items: center;
 }
 
+.buttonContainer img {
+  cursor: pointer;
+}
+
 .noLocationContainer {
   display: flex;
   flex-direction: column;

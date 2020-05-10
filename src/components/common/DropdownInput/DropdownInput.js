@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { memo } from "react";
 import "./DropdownInput.css";
 
+/**
+ * Dropdown Component - Controlled component
+ * @param {String} label Label of the input
+ * @param {String} value Value of the input
+ * @param {String} placeholder Placeholder of the dropdown
+ * @param {Array<Object>} options Options array
+ * @param {Function(String)} onChange Function callback for the value selection
+ * @param {String} error To display error
+ */
 function DropdownInput({ label, value, placeholder, options, onChange, error }) {
-  const [selected, setSelected] = useState(value);
   const onChangeInput = e => {
     const { value } = e.target;
-    setSelected(value);
     onChange(value);
   };
   return <div className="dropdownInputContainer">
     <label>{label}</label>
-    <select value={selected} onChange={onChangeInput}>
+    <select value={value} onChange={onChangeInput}>
       <option value="">{placeholder}</option>
       {options.map(el => (
         <option key={el.value} value={el.value}>{el.label}</option>
@@ -20,4 +27,4 @@ function DropdownInput({ label, value, placeholder, options, onChange, error }) 
   </div>;
 }
 
-export default DropdownInput;
+export default memo(DropdownInput);

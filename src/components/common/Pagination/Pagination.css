@@ -24,3 +24,13 @@
   align-items: center;
   margin-left: 10px;
 }
+
+.buttonBox button {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.buttonBox button:disabled {
+  opacity: 0.3;
+}
