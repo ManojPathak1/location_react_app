@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import "./TagsInput.css";
+import s from "./TagsInput.scss";
 
 /**
  * Tags Input Components - Controlled Component
@@ -21,8 +21,9 @@ function TagsInput({ label, value = [], onChange }) {
     newTags.splice(index, 1);
     onChange(newTags);
   };
+  console.log(s);
   return (
-    <div className="tagsInputContainer">
+    <div className={s.tagsInputContainer}>
       <label>{label}</label>
       <input className="inputText" type="text" value={inputText} onChange={(event) => setInputText(event.target.value)} onKeyDown={handleKeyDown} />
       <div>
