@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, ReactElement } from "react";
 import s from "./TagsInput.scss";
 
 /**
@@ -7,27 +7,34 @@ import s from "./TagsInput.scss";
  * @param {Array<String>} value Holds the array of strings of tags
  * @param {Function(Array<String>)} onChange Function called with updated tags  
  */
-function TagsInput({ label, value = [], onChange }: { label: string, value: any, onChange: any }) {
-  const [inputText, setInputText] = useState("");
-  const handleKeyDown = (e: any) => {
+
+interface TagsInputProps {
+  label: string,
+  value: string[],
+  onChange: Function
+}
+
+function TagsInput({ label, value = [], onChange }: TagsInputProps) {
+  const [inputText, setInputText]: [string, Function] = useState("");
+  const handleKeyDown = (e: any): void => {
     if (e.key === 'Enter') {
-      const updatedTags = [...value, ...e.target.value.split(",").map((el: any) => el.trim())];
+      const updatedTags: string[] = [...value, ...e.target.value.split(",").map((el: string) => el.trim())];
       setInputText("");
       onChange(updatedTags);
     }
   };
-  const deleteTag = (index: number) => {
+  const deleteTag = (index: number): void => {
     const newTags = [...value];
     newTags.splice(index, 1);
     onChange(newTags);
   };
-  console.log(label);
+  console.log(s);
   return (
     <div className={s.tagsInputContainer}>
       <label>{label}</label>
-      <input className="inputText" type="text" value={inputText} onChange={(event) => setInputText(event.target.value)} onKeyDown={handleKeyDown} />
+      <input type="text" value={inputText} onChange={(event) => setInputText(event.target.value)} onKeyDown={handleKeyDown} />
       <div>
-        {value.map((tag: any, i: number) => <span key={i}>{tag} <img alt="" onClick={() => deleteTag(i)} height="9" src="./images/close.png" /></span>)}
+        {value.map((tag: string, i: number): ReactElement => <span key={i}>{tag} <img alt="" onClick={() => deleteTag(i)} height="9" src="./images/close.png" /></span>)}
       </div>
     </div>
   );
